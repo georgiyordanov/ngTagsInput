@@ -79,21 +79,11 @@ module.exports = grunt => {
   grunt.registerTask('coverage', ['test', 'remapIstanbul', 'open:coverage']);
   grunt.registerTask('docs', ['clean:build', 'dgeni']);
   grunt.registerTask('travis', ['pack', 'compress', 'copy:travis', 'coveralls']);
-  grunt.registerTask('javascript-only', ['test', 'uglify']);
+  grunt.registerTask('javascript-only', ['lint', 'clean', 'ngtemplates', 'rollup', 'uglify']);
   grunt.registerTask('css-only', ['sass', 'cssmin']);
   grunt.registerTask('release', [
     'pack',
-    'compress',
-    'changelog',
-    'replace:changelog',
-    'shell:git',
-    'copy:bower',
-    'update-bower-version',
-    'shell:git_bower',
-    'dgeni',
-    'copy:website',
-    'update-website-version',
-    'shell:git_website'
+    'copy'
   ]);
   grunt.registerTask('default', ['pack']);
 };

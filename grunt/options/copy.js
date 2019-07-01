@@ -1,45 +1,27 @@
 module.exports = {
-  bower: {
-    files: [{
-      expand: true,
-      flatten: true,
-      src: ['build/*.js', 'build/*.css'],
-      dest: '<%= bowerDirectory %>',
-      filter: 'isFile'
-    }]
-  },
-  travis: {
-    files: [{
-      expand: true,
-      flatten: true,
-      src: ['build/*.zip'],
-      dest: 'build/travis',
-      filter: 'isFile'
-    }]
-  },
-  website: {
-    files: [
+  npm: {
+    files : [
       {
         expand: true,
-        flatten: true,
-        src: ['build/docs/**/*.html'],
-        dest: '<%= websiteDirectory %>/_includes/api',
-        filter: 'isFile'
+        src : [
+          '<%= files.js.out %>',
+          '<%= files.js.out %>.map',
+          '<%= files.js.outMin %>',
+          '<%= files.js.outMin %>.map',
+        ],
+        dest: 'package/build',
+        flatten: true
       },
       {
         expand: true,
-        flatten: true,
-        src: ['build/*.min.js'],
-        dest: '<%= websiteDirectory %>/js',
-        filter: 'isFile'
+        src: [
+          'README.md',
+          'package.json'
+        ],
+        dest: 'package/',
+        flatten: true
       },
-      {
-        expand: true,
-        flatten: true,
-        src: ['build/*.min.css'],
-        dest: '<%= websiteDirectory %>/css',
-        filter: 'isFile'
-      }
+
     ]
   }
 };

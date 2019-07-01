@@ -5,9 +5,6 @@ module.exports = grunt => {
     if (!output || output === 'js') {
       tasks.push('javascript-only');
     }
-    if (!output || output === 'css') {
-      tasks.push('css-only');
-    }
 
     tasks.push('clean:tmp');
 
