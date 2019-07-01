@@ -258,7 +258,7 @@ export default function TagsInputDirective($timeout, $document, $window, $q, tag
       };
 
       let focusInput = () => {
-        $timeout(() => { input[0].focus(); });
+        input[0].focus();
       };
 
       ngModelCtrl.$isEmpty = value => !value || !value.length;
