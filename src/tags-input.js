@@ -374,7 +374,6 @@ export default function TagsInputDirective($timeout, $document, $window, $q, tag
           // automatically, but since the model is an array, $setViewValue does nothing and it's up to us to do it.
           // Unfortunately this won't trigger any registered $parser and there's no safe way to do it.
           ngModelCtrl.$setDirty();
-          focusInput();
         })
         .on('invalid-tag', () => {
           scope.newTag.invalid = true;
