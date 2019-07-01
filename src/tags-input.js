@@ -412,10 +412,8 @@ export default function TagsInputDirective($timeout, $document, $window, $q, tag
           };
 
           let shouldAdd = !options.addFromAutocompleteOnly && addKeys[key];
-          let shouldRemove = (key === tiConstants.KEYS.backspace || key === tiConstants.KEYS.delete) && tagList.selected;
+          let shouldRemove = (key === tiConstants.KEYS.backspace || key === tiConstants.KEYS.delete) && scope.newTag.text().length === 0 && tagList.items.length > 0;
           let shouldEditLastTag = key === tiConstants.KEYS.backspace && scope.newTag.text().length === 0 && options.enableEditingLastTag;
-          let shouldSelect = (key === tiConstants.KEYS.backspace || key === tiConstants.KEYS.left || key === tiConstants.KEYS.right) &&
-            scope.newTag.text().length === 0 && !options.enableEditingLastTag;
 
           if (shouldAdd) {
             tagList.addText(scope.newTag.text());
@@ -429,18 +427,11 @@ export default function TagsInputDirective($timeout, $document, $window, $q, tag
             });
           }
           else if (shouldRemove) {
+            tagList.selectPrior();
             tagList.removeSelected();
           }
-          else if (shouldSelect) {
-            if (key === tiConstants.KEYS.left || key === tiConstants.KEYS.backspace) {
-              tagList.selectPrior();
-            }
-            else if (key === tiConstants.KEYS.right) {
-              tagList.selectNext();
-            }
-          }
 
-          if (shouldAdd || shouldSelect || shouldRemove || shouldEditLastTag) {
+          if (shouldAdd || shouldRemove || shouldEditLastTag) {
             event.preventDefault();
           }
         })
