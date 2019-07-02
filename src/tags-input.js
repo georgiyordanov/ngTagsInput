@@ -317,6 +317,9 @@ export default function TagsInputDirective($timeout, $document, $window, $q, tag
           keydown($event) {
             events.trigger('input-keydown', $event);
           },
+          input($event) {
+            events.trigger('input-input', $event);
+          },
           focus() {
             if (scope.hasFocus) {
               return;
@@ -432,6 +435,24 @@ export default function TagsInputDirective($timeout, $document, $window, $q, tag
           }
 
           if (shouldAdd || shouldRemove || shouldEditLastTag) {
+            event.preventDefault();
+          }
+        })
+        .on('input-input', event => {
+          if (event.originalEvent.type !== 'input' || event.originalEvent.inputType !== 'insertText') {
+            return;
+          }
+    
+          if (
+            ((options.addOnSpace && event.originalEvent.data === ' ') ||
+              (options.addOnComma && event.originalEvent.data === ',')) &&
+            scope.text &&
+            scope.text.endsWith(event.originalEvent.data)
+          ) {
+            scope.text = scope.text.slice(0, -1);
+
+            tagList.addText(scope.text);
+
             event.preventDefault();
           }
         })
