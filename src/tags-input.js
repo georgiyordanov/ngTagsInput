@@ -439,15 +439,17 @@ export default function TagsInputDirective($timeout, $document, $window, $q, tag
           }
         })
         .on('input-input', event => {
-          if (event.originalEvent.type !== 'input' || event.originalEvent.inputType !== 'insertText') {
+          // jQuery wraps the dom event and exposes it as originalEvent
+          const domEvent = event.originalEvent || event;
+          if (domEvent.type !== 'input' || domEvent.inputType !== 'insertText') {
             return;
           }
     
           if (
-            ((options.addOnSpace && event.originalEvent.data === ' ') ||
-              (options.addOnComma && event.originalEvent.data === ',')) &&
+            ((options.addOnSpace && domEvent.data === ' ') ||
+              (options.addOnComma && domEvent.data === ',')) &&
             scope.text &&
-            scope.text.endsWith(event.originalEvent.data)
+            scope.text.endsWith(domEvent.data)
           ) {
             scope.text = scope.text.slice(0, -1);
 
